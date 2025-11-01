@@ -1,0 +1,16 @@
+from itertools import permutations
+
+def solve():
+    letters = 'SENDMORY'
+    for p in permutations('0123456789', len(letters)):
+        s = dict(zip(letters, p))
+        if s['S'] == '0' or s['M'] == '0': 
+            continue
+        send = int(s['S'] + s['E'] + s['N'] + s['D'])
+        more = int(s['M'] + s['O'] + s['R'] + s['E'])
+        money = int(s['M'] + s['O'] + s['N'] + s['E'] + s['Y'])
+        if send + more == money:
+            print(f"SEND={send}, MORE={more}, MONEY={money}")
+            return
+
+solve()

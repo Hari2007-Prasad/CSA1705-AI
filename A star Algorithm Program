@@ -1,0 +1,36 @@
+from queue import PriorityQueue
+
+def astar(graph, h, start, goal):
+    open = PriorityQueue()
+    open.put((0, start))
+    g = {start: 0}
+    came = {}
+    while not open.empty():
+        _, cur = open.get()
+        if cur == goal:
+            path = []
+            while cur in came:
+                path.append(cur)
+                cur = came[cur]
+            print("Path:", [start] + path[::-1])
+            print("Cost:", g[goal])
+            return
+        for n, cost in graph[cur].items():
+            new_g = g[cur] + cost
+            if n not in g or new_g < g[n]:
+                g[n] = new_g
+                f = new_g + h[n]
+                open.put((f, n))
+                came[n] = cur
+
+graph = {
+    'A': {'B': 1, 'C': 3},
+    'B': {'A': 1, 'D': 3, 'E': 5},
+    'C': {'A': 3, 'F': 7},
+    'D': {'B': 3, 'E': 1},
+    'E': {'B': 5, 'D': 1, 'F': 2},
+    'F': {'C': 7, 'E': 2}
+}
+h = {'A': 7, 'B': 6, 'C': 2, 'D': 1, 'E': 0, 'F': 0}
+
+astar(graph, h, 'A', 'E')

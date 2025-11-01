@@ -1,0 +1,24 @@
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    print("The Breadth First Search Traversal for The Graph is as Follows:")
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            print(node, end=" ")
+            visited.add(node)
+            queue.extend(graph[node] - visited)
+
+graph = {
+    1: {2, 3},
+    2: {1, 4, 5},
+    3: {1, 6, 7},
+    4: {2},
+    5: {2},
+    6: {3},
+    7: {3}
+}
+
+bfs(graph, 1)

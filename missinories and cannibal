@@ -1,0 +1,25 @@
+from collections import deque
+
+def valid(m, c):
+    return 0 <= m <= 3 and 0 <= c <= 3 and (m == 0 or m >= c) and (3 - m == 0 or 3 - m >= 3 - c)
+
+def solve():
+    start, goal = (3, 3, 1), (0, 0, 0)
+    q = deque([(start, [])])
+    visited = set([start])
+    moves = [(1,0),(2,0),(0,1),(0,2),(1,1)]
+
+    while q:
+        (m, c, b), path = q.popleft()
+        if (m, c, b) == goal:
+            for step in path + [goal]: print(step)
+            return
+        for mm, cc in moves:
+            if b == 1: nm, nc, nb = m - mm, c - cc, 0
+            else: nm, nc, nb = m + mm, c + cc, 1
+            new_state = (nm, nc, nb)
+            if valid(nm, nc) and new_state not in visited:
+                visited.add(new_state)
+                q.append((new_state, path + [(m, c, b)]))
+
+solve()

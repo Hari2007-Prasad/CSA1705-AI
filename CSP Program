@@ -1,0 +1,36 @@
+states = ['WA', 'NT', 'SA', 'Q', 'NSW', 'V', 'T']
+neighbors = {
+    'WA': ['NT', 'SA'],
+    'NT': ['WA', 'SA', 'Q'],
+    'SA': ['WA', 'NT', 'Q', 'NSW', 'V'],
+    'Q': ['NT', 'SA', 'NSW'],
+    'NSW': ['Q', 'SA', 'V'],
+    'V': ['SA', 'NSW'],
+    'T': []
+}
+colors = ['Red', 'Green', 'Blue']
+solution = {}
+
+def is_valid(state, color):
+    for n in neighbors[state]:
+        if n in solution and solution[n] == color:
+            return False
+    return True
+
+def color_map(index):
+    if index == len(states):
+        return True
+    state = states[index]
+    for color in colors:
+        if is_valid(state, color):
+            solution[state] = color
+            if color_map(index + 1):
+                return True
+            del solution[state]
+    return False
+
+if color_map(0):
+    for s in states:
+        print(s, "=", solution[s])
+else:
+    print("No solution found.")

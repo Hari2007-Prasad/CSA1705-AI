@@ -1,0 +1,29 @@
+data = [
+    ['Sunny', 'Hot', 'No'],
+    ['Sunny', 'Mild', 'No'],
+    ['Overcast', 'Cool', 'Yes'],
+    ['Rain', 'Mild', 'Yes'],
+    ['Rain', 'Cool', 'Yes'],
+    ['Overcast', 'Hot', 'Yes'],
+    ['Sunny', 'Cool', 'Yes']
+]
+def predict(weather, temperature):
+    if weather == 'Overcast':
+        return 'Yes'
+    elif weather == 'Sunny' and temperature == 'Cool':
+        return 'Yes'
+    elif weather == 'Rain' and temperature != 'Hot':
+        return 'Yes'
+    else:
+        return 'No'
+X_test = [
+    ['Sunny', 'Hot'],
+    ['Overcast', 'Cool'],
+    ['Rain', 'Mild'],
+    ['Sunny', 'Cool'],
+    ['Rain', 'Hot']
+]
+y_pred = [predict(x[0], x[1]) for x in X_test]
+
+print("Predicted Values:")
+print(y_pred)
